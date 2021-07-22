@@ -28,15 +28,66 @@ class Bank
             else
                 puts "Invalid input"
                 welcome
-            end
+        end
     end
 
+    def exit
+       exit
+    end
+
+    def getCustomer_byid_axis
+        customer_id = gets.chomp.to_s
+        if not $axis_customer_details.include? customer_id
+            puts "Please enter valid customer id"
+            getCustomer_byid_axis
+        else
+            # puts $axis_customer_details[customer_id] 
+            for x in $axis_customer_details[customer_id].keys 
+                puts "#{x} --> #{$axis_customer_details[customer_id][x]}" 
+            end    
+        end       
+    end
+    def getCustomer_byid_india
+        customer_id = gets.chomp.to_s
+        if not $india_customer_details.include? customer_id
+            puts "Please enter valid customer id"
+            getCustomer_byid_india
+        else
+            # puts $india_customer_details[customer_id] 
+            for x in $getCustomer_byid_india[customer_id].keys 
+                puts "#{x} --> #{$getCustomer_byid_india[customer_id][x]}" 
+            end 
+
+        end       
+
+    end
+    
+    def all_customer_axis
+        for x in $axis_customer_details.keys
+            puts "#{x} customerdetails----"
+            puts "---------"
+            for y in $axis_customer_details[x].keys
+                puts "#{y} -->#{$axis_customer_details[x][y]}"
+            end
+            puts "---------"    
+        end    
+    end
+    def all_customer_india
+        for x in $india_customer_details.keys
+            puts "#{x} customerdetails----"
+            puts "---------"
+            for y in $india_customer_details[x].keys
+                puts "#{y} -->#{$india_customer_details[x][y]}"
+            end
+            puts "---------"    
+        end    
+    end
 
 
     def getIntoAxisBank
         def welcome_axis
-            puts "\nwelcome to the Axis-Bank, please enter 'a' for Axis-Bank details, 'c' for Axis-Bank Customers details,'e' for exit
-            , 'cd' for customer details by id, 'i' for get_into your account:"
+            puts "\nwelcome to the Axis-Bank, please enter 'a' for Axis-Bank details, 'c' for Axis-Bank Customers details,
+            , 'cd' for customer details by customer id, 'i' for get_into your account, 'e' for exit "
             response = gets.chomp.downcase
     
             case response 
@@ -46,10 +97,10 @@ class Bank
                     puts "Axis-Bank-addr --> #{$bank_addr_hash['AxisBank']}"
                 when "c"
                     puts "Here is Axis Bank Customer Details ---------"
-                
+                    all_customer_axis
                 when "cd"
                     puts "Please enter your customer id"  
-                    getCustomer
+                    getCustomer_byid_axis
                 when "e"
                     puts 'Exit'
                 else
@@ -62,7 +113,7 @@ class Bank
     def getIntoIndiaBank
         def welcome_india
             puts "\nwelcome to the India-Bank, please enter 'a' for India-Bank details, 'c' for India-Bank Customers details,
-            'o' for open bank account in Axis-Bank, 'e' for exit:"
+            , 'cd' for customer details by customer id, 'i' for get_into your account, 'e' for exit:"
             response = gets.chomp.downcase
     
             case response 
@@ -72,9 +123,10 @@ class Bank
                     puts "India-Bank-addr --> #{$bank_addr_hash['IndiaBank']}"
                 when "c"
                     puts "Here is India Bank Customer Details ---------"
-                when "o"
-                    puts "Please type your customer id"
-                    openBankAcc_ind    
+                    all_customer_india
+                when "cd"
+                    puts "Please enter your customer id"  
+                    getCustomer_byid_india   
                 when "e"
                     puts 'Exit'
                 else
@@ -318,19 +370,19 @@ cust6 = Customers.new("C-106", "Kapil", "Delhi", acc6)
 $cust_details[cust6.getCustomerId] = cust6.make_details
 $india_customer_details[cust6.getCustomerId] = cust6.make_details
 
+bank = Bank.new
+bank.welcome
 
 
-
-# puts $axis_customer_details
-puts $india_customer_details
+# # puts $axis_customer_details
+# puts $india_customer_details
 
 # puts $cust_details
 
 
 
 
-# bank = Bank.new
-# bank.welcome
+
 
 # puts $bank_ids_hash
 # puts $cust_details
